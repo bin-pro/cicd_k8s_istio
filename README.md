@@ -38,3 +38,6 @@ k8s는 AWS AutoScailing Group을 사용하여 Pod를 배포한다.
 
 8. **MSA 모니터링**:  
 k8s 내에서 Istio와 함께 마이크로서비스 아키텍처를 모니터링하고 관리한다.
+
+
+test
