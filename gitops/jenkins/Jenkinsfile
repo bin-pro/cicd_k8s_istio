@@ -4,7 +4,7 @@ pipeline {
     environment {
         // 환경 변수 설정
         DOCKERFILE_PATH = '/var/jenkins_home/workspace/github_jenkins/gitops/docker/' // Dockerfile의 상대 경로
-        IMAGE_NAME = 'lsb8375/testCicd'
+        IMAGE_NAME = 'lsb8375/test-cicd'
         DOCKER_HUB_USERNAME = 'lsb8375'
         DOCKER_HUB_PASSWORD = credentials('dockerhub_id')
     }
