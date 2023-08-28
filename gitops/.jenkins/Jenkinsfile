@@ -1,5 +1,6 @@
 pipeline {
     agent any
+
     environment {
         // 환경 변수 설정
         DOCKERFILE_PATH = '../.docker' // Dockerfile의 상대 경로
