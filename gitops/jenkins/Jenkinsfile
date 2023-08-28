@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         // 환경 변수 설정
-        DOCKERFILE_PATH = '../docker' // Dockerfile의 상대 경로
+        DOCKERFILE_PATH = '/var/jenkins_home/workspace/github_jenkins/gitops/docker/' // Dockerfile의 상대 경로
         IMAGE_NAME = 'lsb8375/testCicd'
         DOCKER_HUB_USERNAME = 'lsb8375'
         DOCKER_HUB_PASSWORD = credentials('dockerhub_id')
@@ -19,10 +19,7 @@ pipeline {
 
         stage('Gradle Build') {
             steps {
-                    dir("../../app") {
-                        sh './gradlew clean build -x test'
-                    }
-                    sh 'pwd' // 현재 디렉토리 확인
+                sh '/var/jenkins_home/workspace/github_jenkins/app/gradlew clean build -x test'
             }
         }
 /* without test
