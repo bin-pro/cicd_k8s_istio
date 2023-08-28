@@ -3,10 +3,10 @@ pipeline {
 
     environment {
         // 환경 변수 설정
-        DOCKERFILE_PATH = '../docker' // Dockerfile의 상대 경로
-        IMAGE_NAME = 'lsb8375/testCicd' // Docker Hub의 사용자 이름과 리포지터리 이름
-        DOCKER_HUB_USERNAME = 'lsb8375' // Docker Hub의 사용자 이름
-        DOCKER_HUB_PASSWORD = 'Qwsa990513!' // Docker Hub의 비밀번호
+        DOCKERFILE_PATH = '../.docker' // Dockerfile의 상대 경로
+        IMAGE_NAME = 'lsb8375/testCicd'
+        DOCKER_HUB_USERNAME = 'lsb8375'
+        DOCKER_HUB_PASSWORD = credentials('dockerhub_id')
     }
 
     stages {
