@@ -40,3 +40,5 @@ application.yml
 
 my-debug-key.keystore
 .env
+.run/*
+.DS_Store
