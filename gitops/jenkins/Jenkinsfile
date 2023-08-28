@@ -1,19 +1,46 @@
 pipeline {
     agent any
+
+    environment {
+        // 환경 변수 설정
+        DOCKERFILE_PATH = '../docker' // Dockerfile의 상대 경로
+        IMAGE_NAME = 'lsb8375/testCicd' // Docker Hub의 사용자 이름과 리포지터리 이름
+        DOCKER_HUB_USERNAME = 'lsb8375' // Docker Hub의 사용자 이름
+        DOCKER_HUB_PASSWORD = 'Qwsa990513!' // Docker Hub의 비밀번호
+    }
+
     stages {
-        stage('build') {
+        stage('Checkout') {
             steps {
-                echo 'building the application...'
+                checkout scm
             }
         }
-        stage('test') {
+
+        stage('Gradle Build') {
             steps {
-                echo 'testing the application...'
+                sh '../../app/gradlew clean build -x test'
             }
         }
-        stage('deploy') {
+/* without test
+        stage('Gradle Test') {
             steps {
-                echo 'deploying the application...'
+                sh '../../app/gradlew test'
+            }
+        }
+*/
+ //login, cleaning up step
+        stage('Docker Build') {
+            steps {
+                sh "docker build -t ${IMAGE_NAME}:latest -f ${DOCKERFILE_PATH} .."
+            }
+        }
+
+        stage('Docker Push to Docker Hub') {
+            steps {
+                script {
+                    sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}"
+                    sh "docker push ${IMAGE_NAME}:latest"
+                }
             }
         }
     }
