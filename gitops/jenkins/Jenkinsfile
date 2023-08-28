@@ -13,6 +13,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scm
+                sh 'pwd' // 현재 디렉토리 확인
             }
         }
 
@@ -21,6 +22,7 @@ pipeline {
                     dir("../../app") {
                         sh './gradlew clean build -x test'
                     }
+                    sh 'pwd' // 현재 디렉토리 확인
             }
         }
 /* without test
@@ -34,6 +36,7 @@ pipeline {
         stage('Docker Build') {
             steps {
                 sh "docker build -t ${IMAGE_NAME}:latest -f ${DOCKERFILE_PATH} .."
+                sh 'pwd' // 현재 디렉토리 확인
             }
         }
 
@@ -42,6 +45,7 @@ pipeline {
                 script {
                     sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}"
                     sh "docker push ${IMAGE_NAME}:latest"
+                    sh 'pwd' // 현재 디렉토리 확인
                 }
             }
         }
