@@ -17,11 +17,11 @@ pipeline {
             }
         }
 
-        stage('Gradle Build') {
-            steps {
-                sh '/var/jenkins_home/workspace/github_jenkins/app/gradlew clean build -x test'
-            }
+    stage('Gradle Build') {
+        steps {
+            sh 'cd /var/jenkins_home/workspace/github_jenkins/app && ./gradlew clean build -x test'
         }
+    }
 /* without test
         stage('Gradle Test') {
             steps {
