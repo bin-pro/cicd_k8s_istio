@@ -1,50 +1,50 @@
 pipeline {
-    agent any
+ agent any
 
-    environment {
-        // 환경 변수 설정
-        DOCKERFILE_PATH = '/var/jenkins_home/workspace/github_jenkins/gitops/docker/' // Dockerfile의 상대 경로
-        IMAGE_NAME = 'lsb8375/test-cicd'
-        DOCKER_HUB_USERNAME = 'lsb8375'
-        DOCKER_HUB_PASSWORD = credentials('dockerhub_id')
-    }
+ environment {
+     // 환경 변수 설정
+     IMAGE_NAME = 'lsb8375/test-cicd'
+     DOCKER_HUB_USERNAME = 'lsb8375'
+     DOCKER_HUB_PASSWORD = credentials('dockerhub_id')
+ }
 
-    stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-                sh 'pwd' // 현재 디렉토리 확인
-            }
-        }
+ stages {
+     stage('Checkout') {
+         steps {
+             checkout scm
+             sh 'pwd' // 현재 디렉토리 확인
+         }
+     }
 
-    stage('Gradle Build') {
-        steps {
-            sh 'cd /var/jenkins_home/workspace/github_jenkins/app && ./gradlew clean build -x test'
-        }
-    }
+ stage('Gradle Build') {
+     steps {
+         sh 'cd /var/jenkins_home/workspace/github_jenkins/app && ./gradlew clean build -x test'
+     }
+ }
 /* without test
-        stage('Gradle Test') {
-            steps {
-                sh '../../app/gradlew test'
-            }
-        }
+     stage('Gradle Test') {
+         steps {
+             sh '../../app/gradlew test'
+         }
+     }
 */
- //login, cleaning up step
-        stage('Docker Build') {
-            steps {
-                sh "docker build -t ${IMAGE_NAME}:latest -f ${DOCKERFILE_PATH} .."
-                sh 'pwd' // 현재 디렉토리 확인
-            }
-        }
+//login, cleaning up step
+     stage('Docker Build') {
+         steps {
+            sh "cd /var/jenkins_home/workspace/github_jenkins/gitops/docker"
+            sh "docker build -t ${IMAGE_NAME}:latest -f ${DOCKERFILE_PATH} .."
+            sh 'pwd' // 현재 디렉토리 확인
+         }
+     }
 
-        stage('Docker Push to Docker Hub') {
-            steps {
-                script {
-                    sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}"
-                    sh "docker push ${IMAGE_NAME}:latest"
-                    sh 'pwd' // 현재 디렉토리 확인
-                }
-            }
-        }
-    }
+     stage('Docker Push to Docker Hub') {
+         steps {
+             script {
+                 sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}"
+                 sh "docker push ${IMAGE_NAME}:latest"
+                 sh 'pwd' // 현재 디렉토리 확인
+             }
+         }
+     }
+ }
 }
