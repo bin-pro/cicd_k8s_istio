@@ -8,7 +8,7 @@ ENV APP_HOME /app
 WORKDIR $APP_HOME
 
 # JAR 파일을 작업 디렉토리에 추가
-ADD ../../app/build/libs/app-0.0.1-SNAPSHOT.jar app.jar
+ADD /var/jenkins_home/workspace/github_jenkins/app/build/libs/app-0.0.1-SNAPSHOT.jar app.jar
 
 # 포트 설정
 EXPOSE 8080
