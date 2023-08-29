@@ -29,15 +29,16 @@ pipeline {
      }
 */
 //login, cleaning up step
-     stage('Docker Build') {
-         steps {
+stage('Docker Build') {
+        steps {
             sh '''
-              cd /var/jenkins_home/workspace/github_jenkins/gitops/docker
-              docker build -t ${IMAGE_NAME}:latest .
-              pwd
+                cd /var/jenkins_home/workspace/github_jenkins/gitops
+                docker build -t ${IMAGE_NAME}:latest -f ./docker/Dockerfile .
+                pwd
             '''
-         }
-     }
+        }
+    }
+
 
      stage('Docker Push to Docker Hub') {
          steps {
