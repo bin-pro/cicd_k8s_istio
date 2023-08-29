@@ -32,9 +32,7 @@ pipeline {
 stage('Docker Build') {
         steps {
             sh '''
-                cd /var/jenkins_home/workspace/github_jenkins/gitops
-                docker build -t ${IMAGE_NAME}:latest -f ./docker/Dockerfile .
-                pwd
+                docker build -t ${IMAGE_NAME}:latest -f /var/jenkins_home/workspace/github_jenkins/gitops/docker/Dockerfile /var/jenkins_home/workspace/github_jenkins/app
             '''
         }
     }
