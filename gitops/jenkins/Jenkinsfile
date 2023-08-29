@@ -31,9 +31,11 @@ pipeline {
 //login, cleaning up step
      stage('Docker Build') {
          steps {
-            sh "cd /var/jenkins_home/workspace/github_jenkins/gitops/docker"
-            sh "docker build -t ${IMAGE_NAME}:latest -f ${DOCKERFILE_PATH} .."
-            sh 'pwd' // 현재 디렉토리 확인
+            sh '''
+              cd /var/jenkins_home/workspace/github_jenkins/gitops/docker
+              docker build -t ${IMAGE_NAME}:latest .
+              pwd
+            '''
          }
      }
 
